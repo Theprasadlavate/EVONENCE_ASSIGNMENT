@@ -1,0 +1,27 @@
+import pandas as pd
+
+# Sample dataset
+data = {
+    "name": ["Alice", "Bob", "Charlie", "David", "Eve"],
+    "income": [50000, 60000, None, 55000, 60000]
+}
+
+df = pd.DataFrame(data)
+
+# Calculate skewness of 'income' column
+skewness = df['income'].skew()
+
+# Handle missing values based on skewness
+if abs(skewness) <= 0.5:
+    # Data is approximately normal → replace missing values with median
+    median_value = df['income'].median()
+    df['income'].fillna(median_value, inplace=True)
+    method = "median"
+else:
+    # Data is skewed → replace missing values with mode
+    mode_value = df['income'].mode()[0]  # mode() returns a Series
+    df['income'].fillna(mode_value, inplace=True)
+    method = "mode"
+
+print(f"Missing values replaced using the {method}.")
+print(df)
