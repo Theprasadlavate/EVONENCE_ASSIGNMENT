@@ -1,0 +1,16 @@
+import tensorflow as tf
+from tensorflow.keras import layers
+
+# Image augmentation pipeline
+data_augmentation = tf.keras.Sequential([
+    layers.RandomRotation(0.1111),   # ±20 degrees
+    layers.RandomFlip("horizontal"),
+    layers.RandomZoom(0.2, 0.2)
+])
+
+# Example usage with a random image
+sample_image = tf.random.uniform(shape=(1, 224, 224, 3))
+augmented_image = data_augmentation(sample_image)
+
+print("Original shape:", sample_image.shape)
+print("Augmented shape:", augmented_image.shape)
