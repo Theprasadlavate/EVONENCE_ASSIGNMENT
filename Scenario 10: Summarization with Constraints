@@ -1,0 +1,8 @@
+Summarize the following news article in exactly 2 sentences. 
+If the summary exceeds 50 words, truncate it to the nearest complete sentence without cutting off mid-sentence. 
+Ensure the main points are clearly conveyed. 
+
+Article:
+"""
+<INSERT_NEWS_ARTICLE_HERE>
+"""
