@@ -1,0 +1,36 @@
+import json
+from google import genai
+
+# Initialize Gemini client
+client = genai.Client(api_key="YOUR_GEMINI_API_KEY")
+
+# Prompt asking for JSON output
+prompt = "List 3 benefits of Python for data science in JSON format."
+
+try:
+    # Request structured JSON output from Gemini
+    response = client.models.generate_content(
+        model="gemini-2.5-flash",
+        contents=prompt,
+        config={
+            "response_mime_type": "application/json"
+        }
+    )
+
+    # The API returns text — attempt to parse it as JSON
+    text_output = response.text
+    try:
+        data = json.loads(text_output)
+    except json.JSONDecodeError:
+        # Fallback: try cleaning stray text around JSON
+        cleaned = text_output.strip()
+        if cleaned.startswith("```json"):
+            cleaned = cleaned.replace("```json", "").replace("```", "").strip()
+
+        data = json.loads(cleaned)  # Try parsing again
+
+    print("Parsed JSON response:")
+    print(json.dumps(data, indent=2))
+
+except Exception as e:
+    print("Failed to generate or parse JSON:", str(e))
