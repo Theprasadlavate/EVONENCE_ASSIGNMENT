@@ -1,0 +1,30 @@
+import time
+
+def log_execution_time(func):
+    """
+   in this code we can notice 1. # Record start time 2. # Execute the original function 3. # Record end time
+    """
+    def wrapper(*args, **kwargs):
+        start_time = time.time()                 
+        result = func(*args, **kwargs)          
+        end_time = time.time()                    
+        print(f"Execution time of {func.__name__}: {end_time - start_time:.6f} seconds")
+        return result
+    return wrapper
+
+"""and in this section Returns the sum of numbers from 1 to n.
+     Args:
+        n (int): Upper limit of the sum.
+     Returns:
+        int: Sum of numbers from 1 to n.
+"""
+@log_execution_time
+def calculate_sum(n):
+    
+    return sum(range(1, n + 1))
+
+
+if __name__ == "__main__":
+    # Example usage: you can change the number 1000000 to any value
+    total = calculate_sum(100)
+    print("Sum:", total)
