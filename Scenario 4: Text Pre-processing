@@ -1,0 +1,48 @@
+import pandas as pd
+import re
+
+# Sample dataset
+data = {
+    "text": [
+        "Hello World!", 
+        "Python is amazing @2026", 
+        "Data cleaning, is fun!!!"
+    ]
+}
+
+# Create a DataFrame
+df = pd.DataFrame(data)
+
+
+def clean_and_tokenize(text):
+    """
+    Cleans and tokenizes a text string.
+    Steps:
+    1. Convert all characters to lowercase for uniformity.
+    2. Remove special characters, keeping only letters, numbers, and spaces.
+    3. Split the text into tokens (words) based on whitespace.
+  Args:
+        text (str): The text string to be cleaned.
+    Returns:
+        list: A list of clean, tokenized words.
+    """
+   
+
+# Step 1: Convert text to lowercase
+    text = text.lower()
+    
+    # Step 2: Remove special characters (anything not a-z, 0-9, or space)
+    text = re.sub(r'[^a-z0-9\s]', '', text)
+    
+    # Step 3: Tokenize the text by splitting on spaces
+    tokens = text.split()
+    
+    return tokens
+
+
+# Apply the cleaning and tokenizing function to the 'text' column
+df['tokens'] = df['text'].apply(clean_and_tokenize)
+
+# Display the cleaned and tokenized DataFrame
+print(df)
+(in this code we added comments step by step for better code understanding .)
